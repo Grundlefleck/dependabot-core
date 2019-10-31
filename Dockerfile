@@ -67,7 +67,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C3173AA6 \
 ENV PYENV_ROOT=/usr/local/.pyenv \
     PATH="/usr/local/.pyenv/bin:$PATH"
 RUN git clone https://github.com/pyenv/pyenv.git /usr/local/.pyenv \
-    && cd /usr/local/.pyenv && git checkout v1.2.14 && cd - \
+    && cd /usr/local/.pyenv && git checkout fcf539ecef4a3484eb62ef185f7d9ddf713b2a7d && cd - \
     && pyenv install 3.7.5 \
     && pyenv install 2.7.16 \
     && pyenv global 3.7.5
@@ -106,6 +106,8 @@ RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" >> /etc/ap
     && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer
 
+# Echo PHP version
+RUN php -v
 
 ### GO
 
@@ -153,10 +155,10 @@ ENV DEPENDABOT_NATIVE_HELPERS_PATH="/opt" \
     PATH="$PATH:/opt/terraform/bin:/opt/python/bin:/opt/go_modules/bin:/opt/dep/bin" \
     MIX_HOME="/opt/hex/mix"
 
-RUN bash /opt/terraform/helpers/build /opt/terraform && \
-    bash /opt/python/helpers/build /opt/python && \
-    bash /opt/dep/helpers/build /opt/dep && \
-    bash /opt/go_modules/helpers/build /opt/go_modules && \
-    bash /opt/npm_and_yarn/helpers/build /opt/npm_and_yarn && \
-    bash /opt/hex/helpers/build /opt/hex && \
-    bash /opt/composer/helpers/build /opt/composer
+RUN bash /opt/terraform/helpers/build /opt/terraform
+RUN bash /opt/python/helpers/build /opt/python
+RUN bash /opt/dep/helpers/build /opt/dep
+RUN bash /opt/go_modules/helpers/build /opt/go_modules
+RUN bash /opt/npm_and_yarn/helpers/build /opt/npm_and_yarn
+RUN bash /opt/hex/helpers/build /opt/hex
+RUN bash /opt/composer/helpers/build /opt/composer
